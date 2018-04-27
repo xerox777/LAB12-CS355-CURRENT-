@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Address - ADD</title>
+</head>
+<body>
+<h1>Edit Address</h1>
+<form action="/address/update" method="get">
+    Address Name: <input
+            id="street"
+            name="street"
+            type="text"
+            value="<%= address.street%>"
+    />
+    <br />
+    <form action="/address/update" method="get">
+        Zip Code: <input
+                id="zip_code"
+                name="zip_code"
+                type="text"
+                value="<%= address.zip_code%>"
+        />
+        <br />
+
+
+        <% for(var i=0; address_res.length > i; i++ ) {
+            var checked ="";
+
+            if(address_res[i].address_id != null) {
+                checked = "checked";
+            }
+        %>
+
+    <br />
+        <br />
+    <input type="hidden"
+           id="address_id"
+           name="address_id"
+           value="<%= address_res[i].address_id %>"
+    />
+        <% } %>
+    <input type="submit" />
+
+</form>
+</form>
+</body>
+</html>

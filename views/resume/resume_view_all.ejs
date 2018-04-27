@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ecorp - View All</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <img style="margin-left:50px;" width = "250" height = "100"
+      src="https://zayzay.com/wp-content/uploads/2017/10/terry-crews-assult.jpg"/>
+</head>
+    <body style="margin-left:10px;">
+
+        <div style="width:275px; margin-left:40px;">
+        <h1 style="color: purple; background-color:black;">All Resume Info</h1>
+        </div>
+        <a href="/resume/add">ADD USER</a>
+        <a style="margin-left:80px;" href="/resume/add/selectuser">SELECT USER</a>
+        <table border="1">
+            <tr>
+                <th style="background-color: black; color: purple";>Resume ID</th>
+                <th style="background-color: black; color: purple";>First Name</th>
+                <th style="background-color: black; color: purple";>Last Name</th>
+                <th style="background-color: black; color: purple";>Resume Name</th>
+                <th style="background-color: black; color: purple";>Account ID</th>
+                <th style="background-color: black; color: purple";>EDIT</th>
+                <th style="background-color: black; color: purple";>DELETE</th>
+            </tr>
+            <% for(var i = 0; i < resume.length; i++) { %>
+                <tr>
+                    <td><%= resume[i].resume_id %></td>
+                    <td><%= resume[i].fname %></td>
+                    <td><%= resume[i].lname %></td>
+                    <td><%= resume[i].rname %></td>
+                    <td><%= resume[i].account_id %></td>
+                    <td>&nbsp;<a href="/resume/edit?resume_id=<%= resume[i].resume_id %>">EDIT</a></td>
+                    <td>&nbsp;<a href="/resume/delete?resume_id=<%= resume[i].resume_id %>">Delete</a></td>
+
+                    </tr>
+
+            <% } %>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Account - ADD</title>
+</head>
+<body>
+    <h1>Edit Account</h1>
+
+    <br />
+    <br />
+    <br />
+    <% for(var i=0; account_result.length > i; i++ ) {
+        var checked ="";
+
+        if(account_result[i].account_id != null) {
+            checked = "checked";
+        }
+    %>
+    <form action="/account/update" method="get">
+        Account Email: <input id="email" name ="email" type="text" value="<%= account_result[i].email%>" />
+        Account First Name: <input id="first_name" name="first_name" type="text" value="<%= account_result[i].first_name%>"/>
+        Account last Name: <input id="last_name" name="last_name" type="text" value="<%= account_result[i].last_name%>"/>
+
+            <br />
+
+            <% } %>
+
+    <input type="submit" />
+        <input type="hidden"
+               id="account_id"
+               name="account_id"
+               value="<%= account.account_id %>"
+        />
+</form>
+</body>
+</html>

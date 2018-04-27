@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume - UPDATE</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>.right{float: right; margin-left:57px;}</style>
+</head>
+<body>
+<h1>Edit Existing Resume</h1>
+<form action="/resume/update" method="get">
+
+    Resume Name: <input id="rname" name="rname" type="text" value="<%= resume.rname%>" />
+    <br />
+    First Name: <input id="fname" name="fname" type="text" value="<%= resume.fname %>" />
+    <br />
+    Last Name: <input id="lname" name="lname" type="text" value="<%= resume.lname %>" />
+    <br />
+    <select name="account_id">
+    <% for(var i=0; res.length > i; i++ ) { %>
+    <option name ="account_id" value="<%= res[i].account_id %>" >
+            <%=res[i].account_id %>
+    </option>
+
+    <% } %>
+    </select>
+    <br />
+    <input type="submit" />
+    <input type="hidden" id="resume_id" name="resume_id" value="<%= resume.resume_id %>" />
+
+</form>
+</body>
+</html>

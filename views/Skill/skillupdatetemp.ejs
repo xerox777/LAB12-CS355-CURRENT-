@@ -1,0 +1,9 @@
+    Skill Description: <input name="description" type="text" />
+    <br />
+    <% for(var i=0; skill_result.length > i; i++) { %>
+        <input type="checkbox" name="skill_id" value="<%=
+        skill_result[i].skill_id %>"> <%= skill_result[i].skill_name %> + ','
+        <%= skill_result[i].description %>
+        <br />
+        <% } %>
+        <br />

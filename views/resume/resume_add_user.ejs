@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume - Add</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>.right{float: right; margin-left:57px;}</style>
+</head>
+<body>
+<h1>SELECT USER Info</h1>
+<form action="/resume/add" method="get">
+    <div style="width:400px; margin-left:10px;">
+        <fieldset style="margin-top:10px;">
+            <select name="account_id" id = "account_id">
+            <% for(var i=0; resume.length > i; i++ ) { %>
+
+                <option value="<%= resume[i].account_id %>"> <%= resume[i].account_id%> +
+                    <%=resume[i].fname%> +  <%=resume[i].lname %>
+                </option>
+
+                <% } %>
+            </select>
+
+            <input type="submit" style="color: green; background-color: cyan;"/>
+
+        </fieldset>
+    </div>
+</form>
+</body>
+</html>
