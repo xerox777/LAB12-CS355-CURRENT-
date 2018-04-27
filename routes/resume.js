@@ -92,12 +92,12 @@ router.get('/delete', function(req, res){
 });
 
 router.get('/add/resume', function(req, res) {
-    resume_dal.gettable(req.resume_id, function(err, result) {
+    resume_dal.gettable(req.query, function(err, result) {
         if (err) {
             res.send(err);
         }
         else {
-                res.render('resume/resume_add_resume', {skill: result});
+                res.render('resume/resume_add_resume', {skill: result, resume: req.query});//req.query}); //was result
                 resume_dal.triinsert(req.query, function(err, result) {
                     if(err){
                         res.send(err);

@@ -73,9 +73,9 @@ exports.dubinsert = function(params, callback) {
     });
 
 };
-exports.gettable = function(resume_id, callback) {
-    var query = 'CALL resume_info(?)';
-    var queryData = [resume_id];
+exports.gettable = function(acc_id, callback) {
+    var query = 'CALL resume_info(? )'; //, ?, ?)';
+    var queryData =  [acc_id.account_id];//[params.account_id, params.account_id, params.account_id];
     connection.query(query, queryData, function(err, result) {
         callback(err, result);
     });

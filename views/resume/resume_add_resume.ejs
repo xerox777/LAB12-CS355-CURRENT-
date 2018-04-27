@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1>Add New Resume Info</h1>
-<form action="/resume/triinsert" method="get" >
+<form action="/resume/insert" method="get" >
     <div style="width:400px; margin-left:10px;">
         <fieldset style="margin-top:10px;">
                 <label for = "rname">Resume Name: <input style="margin-left:30px;" class="right" name="rname" type="text" />
@@ -19,12 +19,24 @@
                 <br />
                 Skills
                 <br/>
-                    <% for(var i=0; skill.length > i; i++ ) { %>
-                    <input type="checkbox" name="skill_name" value="<%= skill[i].skill_name %>"> <%= skill[i].skill_name %>
+                    <% for(var i=0; skill[0].length > i; i++) { %>
+                    <input type="checkbox" name="skill_name" value="<%= skill[0][i].skill_name %>"> <%= skill[0][i].skill_name %>
                     <br />
                     <% } %>
+                Schools
+                <br/>
+                <% for(var i=0; skill[1].length > i; i++ ) { %>
+                <input type="checkbox" name="school_name" value="<%= skill[1][i].school_name %>"> <%= skill[1][i].school_name %>
+                <br />
+                <% } %>
+                Companies
+                <br/>
+                <% for(var i=0; skill[2].length > i; i++ ) { %>
+                <input type="checkbox" name="company_name" value="<%= skill[2][i].company_name %>"> <%= skill[2][i].company_name %>
+                <br />
+                <% } %>
                 <input type="submit" style="color: green; background-color: cyan;"/>
-
+                <input type="hidden" name="account_id" id="acount_id" value="<%=resume.account_id%>" />
         </fieldset>
     </div>
 </form>
