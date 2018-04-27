@@ -30,6 +30,8 @@ exports.delete = function(params, callback) {
     });
 };
 
+
+
 exports.getAll = function(callback) {
     //var query = 'CALL skill_getall()';
     var query = 'SELECT * FROM skill';

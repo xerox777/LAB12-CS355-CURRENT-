@@ -64,6 +64,23 @@ exports.triinsert = function(params, callback) {
 
 };
 
+exports.dubinsert = function(params, callback) {
+    var query = 'INSERT INTO resume (account_id, fname, lname, rname) VALUES (?,?,?,?)';
+    var queryData = [params.account_id, params.fname, params.lname, params.rname];
+
+    connection.query(query, queryData, function(err, result) {
+        callback(err, result);
+    });
+
+};
+exports.gettable = function(resume_id, callback) {
+    var query = 'CALL resume_info(?)';
+    var queryData = [resume_id];
+    connection.query(query, queryData, function(err, result) {
+        callback(err, result);
+    });
+};
+
 
 exports.update = function(params, callback) {
     var query = 'UPDATE resume SET rname = ?, fname = ?, lname = ?, account_id = ? WHERE resume_id = ?';
