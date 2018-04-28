@@ -98,14 +98,14 @@ router.get('/add/resume', function(req, res) {
         }
         else {
                 res.render('resume/resume_add_resume', {skill: result, resume: req.query});//req.query}); //was result
-                resume_dal.triinsert(req.query, function(err, result) {
+                resume_dal.triinsert(result, function(err, result) {
                     if(err){
                         res.send(err);
                     } else {
-                        resume_dal.dubinsert(req.query, function(err, result) {
+                        //resume_dal.dubinsert(req.query, function(err, result) {
+                        res.redirect(302, '/resume/all');
+                        }
 
-                        });
-                    }
                 });
             }
     });

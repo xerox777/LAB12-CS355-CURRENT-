@@ -32,6 +32,7 @@ app.use('/skill', skill);
 app.use('/address', address);
 app.use('/account', account);
 app.use('/school', school);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));

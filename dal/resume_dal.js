@@ -54,15 +54,84 @@ exports.insert = function(params, callback) {
 
 };
 
-exports.triinsert = function(params, callback) {
-    var query = 'INSERT INTO resume (account_id, fname, lname, rname) VALUES (?,?,?,?)';
-    var queryData = [params.account_id, params.fname, params.lname, params.rname];
+/*exports.triinsert = function(params, callback) {
+    var query = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?,?)';
+    var queryData = [params[2][0].account_id, params[2][0].company_id];
 
-    connection.query(query, queryData, function(err, result) {
-        callback(err, result);
+    connection.query(query, queryData, function (err, result) {
+        if(err) {
+            console.log(err);
+        } else {
+            var query = 'INSERT INTO resume_skill (skill_id,resume_id) VALUES (?,?)';
+            var queryData = [params[1][0].skill_id, params[1][0].resume_id];
+            connection.query(query, queryData, function (err, result) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    var query = 'INSERT INTO resume_school (resume_id, school_id) VALUES (?,?)';
+                    var queryData = [params[0][0].resume_id, params[0][0].school_id];
+                    connection.query(query, queryData, function (err, result) {
+                       if(err){
+                           console.log(err);
+                       } else {
+                           callback(err, result);
+                       }
+
+                    });
+                }
+                callback(err, result);
+        });
+
+            callback(err, result);
+        }
+
     });
+};*/
 
-};
+exports.triinsert = function(params, callback) {
+
+    var query = 'INSERT INTO resume (rname, account_id) VALUES (?,?,?,?)';
+    var queryData = [params.rname, params[2][0].account_id];
+    if (err) {
+        console.log(err);
+    } else {
+        connection.query(query, queryData, function (err, result) {
+            var query = 'INSERT INTO resume_school (resume_id, school_id) VALUES (?,?)';
+            var queryData = [params[0][0].resume_id, params[0][0].school_id];
+            if (err) {
+                console.log(err);
+            } else {
+                connection.query(query, queryData, function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        var query = 'INSERT INTO resume_skill (skill_id,resume_id) VALUES (?,?)';
+                        var queryData = [params[1][0].skill_id, params[1][0].resume_id];
+                        connection.query(query, queryData, function (err, result) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                var query = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?,?)';
+                                var queryData = [params[2][0].account_id, params[2][0].company_id];
+                                connection.query(query, queryData, function (err, result) {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+
+                                        callback(err, result);
+                                    }
+                                });
+                                callback(err, result);
+                            }
+                        });
+                        callback(err, result);
+                    }
+                });
+                callback(err, result);
+            }
+        });
+    }
+}
 
 exports.dubinsert = function(params, callback) {
     var query = 'INSERT INTO resume (account_id, fname, lname, rname) VALUES (?,?,?,?)';
@@ -74,7 +143,7 @@ exports.dubinsert = function(params, callback) {
 
 };
 exports.gettable = function(acc_id, callback) {
-    var query = 'CALL resume_info(? )'; //, ?, ?)';
+    var query = 'CALL resume_info(?)'; //, ?, ?)';
     var queryData =  [acc_id.account_id];//[params.account_id, params.account_id, params.account_id];
     connection.query(query, queryData, function(err, result) {
         callback(err, result);
