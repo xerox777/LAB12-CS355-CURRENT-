@@ -98,18 +98,28 @@ router.get('/add/resume', function(req, res) {
         }
         else {
                 res.render('resume/resume_add_resume', {skill: result, resume: req.query});//req.query}); //was result
-                resume_dal.triinsert(result, function(err, result) {
-                    if(err){
-                        res.send(err);
+                /*resume_dal.triinsert(result, function(error, result) {
+                    if (error) {
+                        res.send(error);
                     } else {
                         //resume_dal.dubinsert(req.query, function(err, result) {
-                        res.redirect(302, '/resume/all');
-                        }
+                        res.redirect(302, 'resume/all');
+                    }
 
-                });
+                });*/
             }
+
     });
 });
 
+router.get('/triinsert', function(req, res) {
+    resume_dal.triinsert(req.query, function(err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.redirect(302, '/resume/all');
+        }
+    });
+});
 
 module.exports = router;
