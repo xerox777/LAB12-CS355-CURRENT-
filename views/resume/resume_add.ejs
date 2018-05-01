@@ -20,9 +20,17 @@
                 <br />
                 <label for = "rname">Resume Name: <input style="margin-left:30px;" class="right" name="rname" type="text" />
                 <br />
+            <select name="account_id" id = "account_id">
+            <% for(var i=0; resumeINFO.length > i; i++ ) { %>
 
+                <option value="<%= resumeINFO[i].account_id %>"> <%= resumeINFO[i].account_id%>
+
+                </option>
+
+                <% } %>
+            </select>
                 <input type="submit" style="color: green; background-color: cyan;"/>
-                <input type="hidden" name="account_id" id="acount_id" value="<%=resume.account_id%>" />
+
                    <input type="hidden" name="resume_id" id="resume_id" value="<%=resume.resume_id%>" />
                 </fieldset>
                 </div>

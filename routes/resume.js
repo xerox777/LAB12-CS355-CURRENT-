@@ -52,7 +52,7 @@ router.get('/add', function(req, res) {
         }
         else {
             resume_dal.getAll(function(err, resume){
-            res.render('resume/resume_add', {resume: req.query, resumeINFO: resume});
+            res.render('resume/resume_add', {resume: req.query, resumeINFO: result});
         });
         }
     });
