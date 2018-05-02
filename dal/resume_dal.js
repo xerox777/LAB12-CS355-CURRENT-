@@ -158,6 +158,13 @@ exports.gettable = function(acc_id, callback) {
     });
 };
 
+exports.editinfo = function(res_id, callback) {
+    var query = 'CALL resume_edit(?)';
+    var queryData = [res_id.resume_id];
+    connection.query(query, queryData, function(err, result) {
+        callback(err, result);
+    });
+};
 
 exports.update = function(params, callback) {
     var query = 'UPDATE resume SET rname = ?, account_id = ? WHERE resume_id = ?';

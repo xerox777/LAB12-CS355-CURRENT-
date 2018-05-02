@@ -20,11 +20,12 @@ router.get('/all', function(req, res, next){
 });
 
 router.get('/edit', function(req, res) {
-    resume_dal.getinfo(req.query.resume_id, function(err, result) {
-        resume_dal.getacAll(function(err, result1) {
+    resume_dal.editinfo(req.query, function(err, result) {
+    //resume_dal.getinfo(req.query.resume_id, function(err, result) { //should be one call to the resume_edit stored proc
+     //   resume_dal.getacAll(function(err, result1) {
             res.render('resume/resume_update',
-                {resume: result[0][0], res: result1});
-        });
+                {resume: result[0][0], res: result});
+        //});
 
     });
 });

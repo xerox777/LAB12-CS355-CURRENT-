@@ -15,10 +15,10 @@
 
     Resume Name: <input id="rname" name="rname" type="text" value="<%= resume.rname%>" />
     <br />
-    <select name="account_id">
-    <% for(var i=0; res.length > i; i++ ) { %>
-    <option name ="account_id" value="<%= res[i].account_id %>" >
-            <%=res[i].account_id %> + <%=res[i].skill_name%> + <%=res[i].description%>
+    <select name="skill_id">
+    <% for(var i=0; res[1].length > i; i++ ) { %>
+    <option name ="skill_id" value="<%= res[1][i].skill_id %>" >
+            <%=res[1][i].skill_id %> + <%=res[1][i].skill_name%> + <%=res[1][i].description%>
     </option>
 
     <% } %>
