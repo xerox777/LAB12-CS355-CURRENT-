@@ -160,10 +160,20 @@ exports.gettable = function(acc_id, callback) {
 
 
 exports.update = function(params, callback) {
-    var query = 'UPDATE resume SET rname = ?, fname = ?, lname = ?, account_id = ? WHERE resume_id = ?';
-    var queryData = [params.rname, params.fname, params.lname, params.account_id, params.resume_id];
+    var query = 'UPDATE resume SET rname = ?, account_id = ? WHERE resume_id = ?';
+    var queryData = [params.rname, Number(params.account_id), Number(params.resume_id)];
     connection.query(query, queryData, function(err, result) {
-        callback(err, result);
+        if(err) {
+            console.log(err);
+        } else {
+            var query = 'call resume_edit(?)';
+            var queryData = [params.resume_id];
+            connection.query(query, queryData, function (error, Result) {
+                callback(err, result);
+
+            });
+
+        }
     });
 };
 
