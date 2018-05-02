@@ -54,7 +54,7 @@ exports.insert = function(params, callback) {
 
 };
 
-exports.triinsert = function(params, callback) {
+/*exports.triinsert = function(params, callback) {
 
     var query = 'INSERT INTO resume (rname, account_id) VALUES (?,?)';
     var queryData = [params.rname, params.account_id];
@@ -68,7 +68,7 @@ exports.triinsert = function(params, callback) {
         var insertId = result.insertId;
 
         var query = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?,?)';
-        var queryData = [insertId, params.account_id];
+        var queryData = [insertId, Number(params.account_id)];
         connection.query(query, queryData, function (err, result) {
             if (err) {
                 console.log(err);
@@ -86,7 +86,7 @@ exports.triinsert = function(params, callback) {
             }
         });
         var query = 'INSERT INTO resume_skill (skill_id, resume_id) VALUES (?,?)';
-        var queryData = [params.account_id, insertId];
+        var queryData = [Number(params.account_id), insertId];
         connection.query(query, queryData, function (err, result) {
                 if (err) {
                     console.log(err);
@@ -95,49 +95,50 @@ exports.triinsert = function(params, callback) {
                 }
         });
     });
-};
+};*/
 
 
-/*exports.triinsert = function(params, callback) {
+exports.triinsert = function(params, callback) {
 
     var query = 'INSERT INTO resume (rname, account_id) VALUES (?,?)';
-    var queryData = [params.rname, params.account_id];
+    var queryData = [params.rname, Number(params.account_id)];
     connection.query(query, queryData, function (err, result) {
     if (err) {
         console.log(err);
     } else {
 
             var query = 'INSERT INTO resume_school (resume_id, school_id) VALUES (?,?)';
-            var queryData = [params.insertId, params.account_id];
-        connection.query(query, queryData, function (err, result) {
+            var queryData = [result.insertId, Number(params.account_id)];
+        connection.query(query, queryData, function (err, result1) {
             if (err) {
                 console.log(err);
             } else {
                 var query = 'INSERT INTO resume_skill (skill_id,resume_id) VALUES (?,?)';
-                var queryData = [params.account_id, params.insertId];
-                connection.query(query, queryData, function (err, result) {
+                var queryData = [Number(params.account_id), result.insertId];
+                connection.query(query, queryData, function (err, result2) {
                     if (err) {
                         console.log(err);
                     } else {
                         var query = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?,?)';
-                        var queryData = [params.insertId, params.account_id];
-                        connection.query(query, queryData, function (err, result) {
+                        var queryData = [result.insertId, params.account_id];
+                        connection.query(query, queryData, function (err, result3) {
                             if (err) {
                                 console.log(err);
                             } else {
                                     callback(err, result);
                                 }
                             });
-                                callback(err, result);
+
+                            //callback(err, result);
                             }
                         });
-                        callback(err, result);
+                       // callback(err, result);
                     }
                 });
-                callback(err, result);
+               // callback(err, result);
             }
         });
- };*/
+ };
 
 
 exports.dubinsert = function(params, callback) {
