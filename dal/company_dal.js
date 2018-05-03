@@ -7,6 +7,15 @@ var db = require('./db_connection.js');
 
 var connection = mysql.createConnection(db.config);
 
+exports.delete = function(params, callback) {
+    var query = 'DELETE FROM company WHERE company_id = ?';
+    var queryData = [Number(params.company_id)];
+    connection.query(query, queryData, function(err, result) {
+        callback(err, result);
+    });
+};
+
+
 var companyAddressInsert = function(company_id, addressIdArray, callback){
     var query = 'INSERT INTO company_address (company_id, address_id) VALUES ?';
     var companyAddressData = [];
@@ -70,7 +79,7 @@ exports.insert = function(params, callback) {
     var queryData = [params.company_name];
 
     connection.query(query, queryData, function(err, result) {
-        if(err || address_id === undefined) {
+        if(err  || params.address_id === undefined) {
             console.log(err);
             callback(err, result);
         }
@@ -87,11 +96,11 @@ exports.insert = function(params, callback) {
                 }
             }
             else {
-                companyAddressData.push([company_id, params.address_id]);
+                companyAddressData.push([company_id, Number(params.address_id)]);
             }
 
-            connection.query(query, [companyAddressData], function (err, result) {
-                callback(err, result);
+            connection.query(query, companyAddressData, function (err, result) {
+                callback(err, company_id);
             });
         }
 

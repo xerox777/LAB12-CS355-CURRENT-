@@ -109,19 +109,19 @@ exports.triinsert = function(params, callback) {
 
             var query = 'INSERT INTO resume_school (resume_id, school_id) VALUES (?,?)';
             var queryData = [result.insertId, Number(params.account_id)];
-        connection.query(query, queryData, function (err, result1) {
+        connection.query(query, queryData, function (err, result) {
             if (err) {
                 console.log(err);
             } else {
                 var query = 'INSERT INTO resume_skill (skill_id,resume_id) VALUES (?,?)';
                 var queryData = [Number(params.account_id), result.insertId];
-                connection.query(query, queryData, function (err, result2) {
+                connection.query(query, queryData, function (err, result) {
                     if (err) {
                         console.log(err);
                     } else {
                         var query = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?,?)';
                         var queryData = [result.insertId, params.account_id];
-                        connection.query(query, queryData, function (err, result3) {
+                        connection.query(query, queryData, function (err, result) {
                             if (err) {
                                 console.log(err);
                             } else {
@@ -139,7 +139,13 @@ exports.triinsert = function(params, callback) {
             }
         });
  };
-
+exports.getaccinfo = function(res_id, callback) {
+    var query = 'CALL resume_acc()'; //, ?, ?)';
+    //var queryData =  [res_id.resume_id];//[params.account_id, params.account_id, params.account_id];
+    connection.query(query, function(err, result) {
+        callback(err, result);
+    });
+};
 
 exports.dubinsert = function(params, callback) {
     var query = 'INSERT INTO resume (account_id, fname, lname, rname) VALUES (?,?,?,?)';
@@ -168,7 +174,7 @@ exports.editinfo = function(res_id, callback) {
 
 exports.update = function(params, callback) {
     var query = 'UPDATE resume SET rname = ?, account_id = ? WHERE resume_id = ?';
-    var queryData = [params.rname, Number(params.account_id), Number(params.resume_id)];
+    var queryData = [params.rname, Number(params.skill_id), Number(params.resume_id)];
     connection.query(query, queryData, function(err, result) {
         if(err) {
             console.log(err);

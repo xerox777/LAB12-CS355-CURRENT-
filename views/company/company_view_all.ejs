@@ -19,7 +19,9 @@
                 <a href='/company/edit/?company_id=<%= companies[i].company_id %>'>
                     Edit
                 </a>
-            </td>
+                </td>
+                <td>&nbsp;<a href='/company/delete/?company_id=<%= companies[i].company_id %>''>Delete</a></td>
+
         </tr>
         <% } %>
     </table>

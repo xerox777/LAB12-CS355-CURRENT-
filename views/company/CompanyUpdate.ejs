@@ -25,6 +25,13 @@
          address_result[i].zip_code %>
         <br />
         <% } %>
+        <% if(locals.was_successful) { %>
+            <div class="col-md-12">
+                <div id="message" class="alert alert-success col-md-4">
+                    <%= company.company_name %> was successfuly saved. %>
+                </div>
+            </div>
+            <% } %>
         <input type="submit" />
         <input type="hidden"
                id="company_id"

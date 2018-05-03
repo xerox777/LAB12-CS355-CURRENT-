@@ -15,10 +15,10 @@
     <div style="width:400px; margin-left:10px;">
         <fieldset style="margin-top:10px;">
             <select name="account_id" id = "account_id">
-            <% for(var i=0; resume.length > i; i++ ) { %>
+            <% for(var i=0; resume[0].length > i; i++ ) { %>
 
-                <option value="<%= resume[i].account_id %>"> <%= resume[i].account_id%> +
-                    <%=resume[i].fname%> +  <%=resume[i].lname %>
+                <option value="<%= resume[0][i].account_id %>"> <%= resume[0][i].account_id%> +
+                    <%=resume[0][i].first_name%> +  <%=resume[0][i].last_name %>
                 </option>
 
                 <% } %>

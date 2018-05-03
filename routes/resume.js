@@ -8,7 +8,8 @@ var account_dal = require('../dal/account_dal');
 var skill_dal = require('../dal/skill_dal');
 
 router.get('/all', function(req, res, next){
-    resume_dal.getAll(function(err, result) {
+    //resume_dal.getAll(function(err, result) {
+    resume_dal.getaccinfo(req.query, function(err, result){
         if(err) {
             console.log(err);
             res.send(err);
@@ -16,7 +17,7 @@ router.get('/all', function(req, res, next){
             console.log(result);
             res.render('resume/resume_view_all', {resume: result});
         }
-    })
+    });
 });
 
 router.get('/edit', function(req, res) {
@@ -31,7 +32,8 @@ router.get('/edit', function(req, res) {
 });
 
 router.get('/add/selectuser', function(req, res) {
-    resume_dal.getAll(function(err, result) {
+    resume_dal.getaccinfo(req.query, function(err, result){
+    //resume_dal.getAll(function(err, result) {
         if (err) {
             res.send(err);
         }
@@ -111,7 +113,7 @@ router.get('/triinsert', function(req, res) {
         if (err) {
             res.send(err);
         } else {
-            res.redirect(302, '/resume/all');
+            res.redirect(302, 'resume/all');
         }
     });
 });

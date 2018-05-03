@@ -28,18 +28,17 @@
                 <th style="background-color: black; color: purple";>EDIT</th>
                 <th style="background-color: black; color: purple";>DELETE</th>
             </tr>
-            <% for(var i = 0; i < resume.length; i++) { %>
+            <% for(var i = 0; i < resume[0].length; i++) { %>
                 <tr>
-                    <td><%= resume[i].resume_id %></td>
-                    <td><%= resume[i].fname %></td>
-                    <td><%= resume[i].lname %></td>
-                    <td><%= resume[i].rname %></td>
-                    <td><%= resume[i].account_id %></td>
-                    <td>&nbsp;<a href="/resume/edit?resume_id=<%= resume[i].resume_id %>">EDIT</a></td>
-                    <td>&nbsp;<a href="/resume/delete?resume_id=<%= resume[i].resume_id %>">Delete</a></td>
+                    <td><%= resume[0][i].resume_id %></td>
+                    <td><%= resume[0][i].first_name %></td>
+                    <td><%= resume[0][i].last_name %></td>
+                    <td><%= resume[0][i].rname %></td>
+                    <td><%= resume[0][i].account_id %></td>
+                    <td>&nbsp;<a href="/resume/edit?resume_id=<%= resume[0][i].resume_id %>">EDIT</a></td>
+                    <td>&nbsp;<a href="/resume/delete?resume_id=<%= resume[0][i].resume_id %>">Delete</a></td>
 
                     </tr>
-
             <% } %>
         </table>
     </body>
