@@ -180,7 +180,7 @@ exports.update = function(params, callback) {
             console.log(err);
         } else {
             var query = 'call resume_edit(?)';
-            var queryData = [params.resume_id];
+            var queryData = [Number(params.resume_id)];
             connection.query(query, queryData, function (error, Result) {
                 callback(err, result);
 
