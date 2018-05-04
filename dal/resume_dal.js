@@ -127,7 +127,6 @@ exports.triinsert = function(params, callback) {
                     console.log(err);
                     callback(err, result);
                 } else {
-                    var resume_id = result.insertId;
                     var query = 'INSERT INTO resume_skill (resume_id, skill_id) VALUES (?)';
                     var resumeskillData = [];
 
@@ -146,7 +145,6 @@ exports.triinsert = function(params, callback) {
                             console.log(err);
                             callback(err, result);
                         } else {
-                            var resume_id = result.insertId;
                             var query = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?)';
                             var resumecompanyData = [];
 
@@ -169,7 +167,7 @@ exports.triinsert = function(params, callback) {
             });
         }
     });
-}
+};
             /*if (err) {  TODO - THIS WAS OLD TRIINSERT FUNCTION
             console.log(err);
         } else {
@@ -205,7 +203,7 @@ exports.triinsert = function(params, callback) {
                    // callback(err, result);
                 }
             });*/
- };
+
 exports.getaccinfo = function(res_id, callback) {
     var query = 'CALL resume_acc()'; //, ?, ?)';
     //var queryData =  [res_id.resume_id];//[params.account_id, params.account_id, params.account_id];
