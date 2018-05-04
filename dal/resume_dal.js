@@ -239,39 +239,25 @@ exports.editinfo = function(res_id, callback) {
 
 exports.update = function(params, callback) {
     var query = 'UPDATE resume SET rname = ?, account_id = ? WHERE resume_id = ?';
-    var queryData = [params.rname, Number(params.skill_id), Number(params.resume_id)];
+    var queryData = [params.rname, Number(params.account_id), Number(params.resume_id)];
     connection.query(query, queryData, function(err, result) {
         if(err) {
             console.log(err);
         } else {
-            var query = 'call resume_edit(?)';
+           /* var query = 'call resume_edit(?)';
             var queryData = [Number(params.resume_id)];
             connection.query(query, queryData, function (error, Result) {
+                callback(err, result);*/
+            resumeUpdate(params, function(err, result){
                 callback(err, result);
-
             });
 
-        }
-    });
+            }
+
+        });
 };
 
-
-
-
-var resumeUpdate = function(resume_id, accountid, callback){
-    var query = 'CALL resume_delete(?)';
-
-    connection.query(query, resume_id, function (err, result) {
-        if(err || accountid === undefined) {
-            callback(err, result);
-        }
-        else {
-            resume_dal.triinsert(accountid, callback);
-        }
-    });
-};
-
-exports.update = function(params, callback){
+/*exports.update = function(params, callback){
     var query = 'UPDATE resume SET rname = ? WHERE resume_id = ?';
     var queryData = [params.rname, params.resume_id];
     connection.query(query, queryData, function(err, result) {
@@ -280,4 +266,21 @@ exports.update = function(params, callback){
         });
     });
 };
+*/
+
+
+var resumeUpdate = function(params, callback){
+    var query = 'CALL resume_delete(?)';
+    var param = [Number(params.resume_id), Number(params.account_id)];
+    connection.query(query, param, function (err, result) {
+        if(err || param.account_id === undefined) {
+            callback(err, result);
+        }
+        else {
+            resume_dal.triinsert(param, callback);
+        }
+    });
+};
+
+
 

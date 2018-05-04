@@ -113,7 +113,7 @@ router.get('/triinsert', function(req, res) {
         if (err) {
             res.send(err);
         } else {
-            res.redirect(302, 'resume/all');
+            res.redirect(302, '/resume/all');
         }
     });
 });
