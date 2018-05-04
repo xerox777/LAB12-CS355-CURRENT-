@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 var db = require('./db_connection.js');
-
+var resume_dal = require('./resume_dal.js');
 var connection = mysql.createConnection(db.config);
 
 
@@ -103,41 +103,108 @@ exports.triinsert = function(params, callback) {
     var query = 'INSERT INTO resume (rname, account_id) VALUES (?,?)';
     var queryData = [params.rname, Number(params.account_id)];
     connection.query(query, queryData, function (err, result) {
-    if (err) {
-        console.log(err);
-    } else {
+        if (err || params.account_id === undefined) {
+            console.log(err);
+            callback(err, result);
+        }
+        else {
+            var resume_id = result.insertId;
+            var query = 'INSERT INTO resume_school (resume_id, school_id) VALUES (?)';
+            var resumeschoolData = [];
 
-            var query = 'INSERT INTO resume_school (resume_id, school_id) VALUES (?,?)';
-            var queryData = [result.insertId, Number(params.account_id)];
-        connection.query(query, queryData, function (err, result) {
-            if (err) {
-                console.log(err);
-            } else {
-                var query = 'INSERT INTO resume_skill (skill_id,resume_id) VALUES (?,?)';
-                var queryData = [Number(params.account_id), result.insertId];
-                connection.query(query, queryData, function (err, result) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        var query = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?,?)';
-                        var queryData = [result.insertId, params.account_id];
-                        connection.query(query, queryData, function (err, result) {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                    callback(err, result);
+            if (params.account_id.constructor === Array) {
+                for (var i = 0; i < params.account_id.length; i++) {
+                    resumeschoolData.push(
+                        [resume_id, params.account_id[i]]
+                    );
+                }
+            }
+            else {
+                resumeschoolData.push([resume_id, Number(params.account_id)]);
+            }
+            connection.query(query, resumeschoolData, function (err, result) {
+                if (err || params.account_id === undefined) {
+                    console.log(err);
+                    callback(err, result);
+                } else {
+                    var resume_id = result.insertId;
+                    var query = 'INSERT INTO resume_skill (resume_id, skill_id) VALUES (?)';
+                    var resumeskillData = [];
+
+                    if (params.account_id.constructor === Array) {
+                        for (var i = 0; i < params.account_id.length; i++) {
+                            resumeschoolData.push(
+                                [resume_id, params.account_id[i]]
+                            );
+                        }
+                    }
+                    else {
+                        resumeskillData.push([resume_id, Number(params.account_id)]);
+                    }
+                    connection.query(query, resumeschoolData, function (err, result) {
+                        if (err || params.account_id === undefined) {
+                            console.log(err);
+                            callback(err, result);
+                        } else {
+                            var resume_id = result.insertId;
+                            var query = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?)';
+                            var resumecompanyData = [];
+
+                            if (params.account_id.constructor === Array) {
+                                for (var i = 0; i < params.account_id.length; i++) {
+                                    resumecompanyData.push(
+                                        [resume_id, params.account_id[i]]
+                                    );
+                                }
+                            }
+                            else {
+                                resumecompanyData.push([resume_id, Number(params.account_id)]);
+                            }
+                            connection.query(query, resumecompanyData, function (err, result) {
+                                callback(err, result);
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+            /*if (err) {  TODO - THIS WAS OLD TRIINSERT FUNCTION
+            console.log(err);
+        } else {
+
+                var query = 'INSERT INTO resume_school (resume_id, school_id) VALUES (?,?)';
+                var queryData = [result.insertId, Number(params.account_id)];
+            connection.query(query, queryData, function (err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    var query = 'INSERT INTO resume_skill (skill_id,resume_id) VALUES (?,?)';
+                    var queryData = [Number(params.account_id), result.insertId];
+                    connection.query(query, queryData, function (err, result) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            var query = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?,?)';
+                            var queryData = [result.insertId, params.account_id];
+                            connection.query(query, queryData, function (err, result) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                        callback(err, result);
+                                    }
+                                });
+
+                                //callback(err, result);
                                 }
                             });
-
-                            //callback(err, result);
-                            }
-                        });
-                       // callback(err, result);
-                    }
-                });
-               // callback(err, result);
-            }
-        });
+                           // callback(err, result);
+                        }
+                    });
+                   // callback(err, result);
+                }
+            });*/
  };
 exports.getaccinfo = function(res_id, callback) {
     var query = 'CALL resume_acc()'; //, ?, ?)';
@@ -187,6 +254,32 @@ exports.update = function(params, callback) {
             });
 
         }
+    });
+};
+
+
+
+
+var resumeUpdate = function(resume_id, accountid, callback){
+    var query = 'CALL resume_delete(?)';
+
+    connection.query(query, resume_id, function (err, result) {
+        if(err || accountid === undefined) {
+            callback(err, result);
+        }
+        else {
+            resume_dal.triinsert(accountid, callback);
+        }
+    });
+};
+
+exports.update = function(params, callback){
+    var query = 'UPDATE resume SET rname = ? WHERE resume_id = ?';
+    var queryData = [params.rname, params.resume_id];
+    connection.query(query, queryData, function(err, result) {
+        resumeUpdate(params.resume_id, params.account_id, function (err, result) {
+            callback(err, result);
+        });
     });
 };
 
