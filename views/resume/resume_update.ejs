@@ -26,7 +26,7 @@
             } %>
     <input type="checkbox" name="skill_id" <%= checked %> value="<%= res[1][i].skill_name %>">
     <%= res[1][i].skill_name %>  + <%=res[1][i].description%>
-
+    <br />
     <% } %>
     <br />
     Companies:
@@ -40,6 +40,7 @@
 
      <input type="checkbox" name="company_id" <%= checked %> value=" <%=res[2][i].company_id%>">
      <%= res[2][i].company_name %>
+     <br />
         <% } %>
     <br />
     Schools:
@@ -52,6 +53,7 @@
                 } %>
      <input type="checkbox" name="school_id" <%= checked %> value=" <%=res[3][i].school_id%>">
      <%= res[3][i].school_name %>
+     <br />
         <% } %>
     <br />
     <input type="submit" />
