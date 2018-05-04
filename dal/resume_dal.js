@@ -248,8 +248,24 @@ exports.update = function(params, callback) {
             var queryData = [Number(params.resume_id)];
             connection.query(query, queryData, function (error, Result) {
                 callback(err, result);*/
-            resumeUpdate(params, function(err, result){
-                callback(err, result);
+            resumeSkillUpdate(params, function(err, result){
+                if(err) {
+                    console.log(err);
+                } else {
+                    resumeSchoolUpdate(params, function(err, esult){
+                        if(err){
+                            console.log(err);
+                        } else{
+                            resumeCompanyUpdate(params, function(err, result){
+                                if(err){
+                                    console.log(err);
+                                } else {
+                                    callback(err, result);
+                                }
+                            });
+                        }
+                    });
+                }
             });
 
             }
@@ -269,7 +285,7 @@ exports.update = function(params, callback) {
 */
 var resumeSkillUpdate = function(params, callback){
     var query = 'CALL resumeskill_delete(?)';
-    var param = [Number(params.resume_id), Number(params.account_id)];
+    var param = [Number(params.skill_id[1]), Number(params.resume_id)];
     connection.query(query, param, function (err, result) {
         if(err || param.account_id === undefined) {
             callback(err, result);
@@ -281,7 +297,7 @@ var resumeSkillUpdate = function(params, callback){
 };
 var resumeSchoolUpdate = function(params, callback){
     var query = 'CALL resumeschool_delete(?)';
-    var param = [Number(params.resume_id), Number(params.account_id)];
+    var param = [Number(params.resume_id)];
     connection.query(query, param, function (err, result) {
         if(err || param.account_id === undefined) {
             callback(err, result);
@@ -293,7 +309,7 @@ var resumeSchoolUpdate = function(params, callback){
 };
 var resumeCompanyUpdate = function(params, callback){
     var query = 'CALL resumecompany_delete(?)';
-    var param = [Number(params.resume_id), Number(params.account_id)];
+    var param = [Number(params.resume_id)];//, Number(params.account_id)];
     connection.query(query, param, function (err, result) {
         if(err || param.account_id === undefined) {
             callback(err, result);
