@@ -24,7 +24,7 @@
             if(res[1][i].resume_id != null) {
                 checked = "checked";
             } %>
-    <input type="checkbox" name="skill_id" <%= checked %> value="<%= res[1][i].skill_name %>">
+    <input type="checkbox" name="skill_id" <%= checked %> value="<%= res[1][i].skill_id %>">
     <%= res[1][i].skill_name %>  + <%=res[1][i].description%>
     <br />
     <% } %>
@@ -61,10 +61,11 @@
     <input type="hidden" id="resume_id" name="resume_id" value="<%= res[0][i].resume_id %>" />
     <input type="hidden" id="account_id" name="account_id" value="<%= res[0][i].account_id %>" />
     <% } %>
-    <% for(var i=0; res[1].length > i; i++ ) { %>
-     <input type="hidden" id="skill_id" name="skill_id" value="<%= res[1][i].skill_id %>" />
-     <% } %>
+   <!-- <% for(var i=0; res[1].length > i; i++ ) { %>
 
+     <input type="hidden" id="skill_id" name="skill_id" value="<%= res[1][i].skill_id %>" />
+
+    <% } %> -->
 </form>
 </body>
 </html>

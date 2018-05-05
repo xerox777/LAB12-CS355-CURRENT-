@@ -284,38 +284,65 @@ exports.update = function(params, callback) {
 };
 */
 var resumeSkillUpdate = function(params, callback){
-    var query = 'CALL resumeskill_delete(?, ?)';
-    var param = [Number(params.skill_id[1]), Number(params.resume_id)];
-    connection.query(query, param, function (err, result) {
-        if(err || param.account_id === undefined) {
-            callback(err, result);
+    var query = 'Delete from resume_skill where resume_id = (?)';
+    var queryData = [Number(params.resume_id)];
+    connection.query(query, queryData, function(err, result){
+        if(err) {
+            console.log(err);
+        }else {
+
+            var query = 'CALL resumeskill_insert(?, ?)';
+            var param = [Number(params.skill_id), Number(params.resume_id)];
+            connection.query(query, param, function (err, result) {
+                if (err || param.account_id === undefined) {
+                    callback(err, result);
+                }
+                else {
+                    resume_dal.triinsert(param, callback);
+                }
+            });
         }
-        else {
-            resume_dal.triinsert(param, callback);
-        }
-    });
+        });
 };
 var resumeSchoolUpdate = function(params, callback){
-    var query = 'CALL resumeschool_delete(?, ?)';
-    var param = [Number(params.resume_id), Number(params.school_id)];
-    connection.query(query, param, function (err, result) {
-        if(err || param.account_id === undefined) {
-            callback(err, result);
-        }
-        else {
-            resume_dal.triinsert(param, callback);
-        }
+    var query = 'Delete from resume_school where resume_id = (?)';
+    var queryData = [Number(params.resume_id)];
+    connection.query(query, queryData, function(err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+
+
+        var query = 'CALL resumeschool_insert(?, ?)';
+        var param = [Number(params.resume_id), Number(params.school_id)];
+        connection.query(query, param, function (err, result) {
+            if (err || param.account_id === undefined) {
+                callback(err, result);
+            }
+            else {
+                resume_dal.triinsert(param, callback);
+            }
+        });
+    }
     });
 };
 var resumeCompanyUpdate = function(params, callback){
-    var query = 'CALL resumecompany_delete(?, ?)';
-    var param = [Number(params.resume_id), Number(params.company_id)];//, Number(params.account_id)];
-    connection.query(query, param, function (err, result) {
-        if(err || param.account_id === undefined) {
-            callback(err, result);
-        }
-        else {
-            resume_dal.triinsert(param, callback);
+    var query = 'Delete from resume_company where resume_id = (?)';
+    var param = [Number(params.resume_id)];
+    connection.query(query, param, function(err, result) {
+        if(err) {
+            console.log(err);
+        }else {
+            var query = 'CALL resumecompany_insert(?, ?)';
+            var param = [Number(params.resume_id), Number(params.company_id)];//, Number(params.account_id)];
+            connection.query(query, param, function (err, result) {
+                if (err || param.account_id === undefined) {
+                    callback(err, result);
+                }
+                else {
+                    resume_dal.triinsert(param, callback);
+                }
+            });
         }
     });
 };
