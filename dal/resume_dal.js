@@ -105,7 +105,7 @@ exports.triinsert = function(params, callback) {
     connection.query(query, queryData, function (err, result) {
         if (err || params.account_id === undefined) {
             console.log(err);
-            callback(err, result);
+            //callback(err, result);
         }
         else {
             var resume_id = result.insertId;
@@ -125,9 +125,9 @@ exports.triinsert = function(params, callback) {
             connection.query(query, resumeschoolData, function (err, result) {
                 if (err || params.skill_id === undefined) {
                     console.log(err);
-                    callback(err, result);
+                    //callback(err, result);
                 } else {
-                    var query = 'INSERT INTO resume_skill (skill_id, resume_id) VALUES (?)';
+                    var query2 = 'INSERT INTO resume_skill (resume_id, skill_id ) VALUES (?)';
                     var resumeskillData = [];
 
                     if (params.skill_id.constructor === Array) {
@@ -140,12 +140,12 @@ exports.triinsert = function(params, callback) {
                     else {
                         resumeskillData.push([resume_id, Number(params.skill_id)]);
                     }
-                    connection.query(query, resumeschoolData, function (err, result) {
+                    connection.query(query2, resumeskillData, function (err, result) {
                         if (err || params.company_id === undefined) {
                             console.log(err);
-                            callback(err, result);
+                            //callback(err, result);
                         } else {
-                            var query = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?)';
+                            var query3 = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?)';
                             var resumecompanyData = [];
 
                             if (params.company_id.constructor === Array) {
@@ -158,7 +158,7 @@ exports.triinsert = function(params, callback) {
                             else {
                                 resumecompanyData.push([resume_id, Number(params.company_id)]);
                             }
-                            connection.query(query, resumecompanyData, function (err, result) {
+                            connection.query(query3, resumecompanyData, function (err, result) {
                                 callback(err, result);
                             });
                         }
