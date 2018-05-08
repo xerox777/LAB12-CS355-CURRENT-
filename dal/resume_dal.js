@@ -115,12 +115,12 @@ exports.triinsert = function(params, callback) {
             if (params.school_id.constructor === Array) {
                 for (var i = 0; i < params.school_id.length; i++) {
                     resumeschoolData.push(
-                        [resume_id, Number(params.school_id)[i]]
+                        [Number(resume_id), Number(params.school_id[i])]
                     );
                 }
             }
             else {
-                resumeschoolData.push([resume_id, Number(params.school_id)]);
+                resumeschoolData.push([Number(resume_id), Number(params.school_id)]);
             }
             connection.query(query, resumeschoolData, function (err, result) {
                 if (err || params.skill_id === undefined) {
@@ -133,12 +133,12 @@ exports.triinsert = function(params, callback) {
                     if (params.skill_id.constructor === Array) {
                         for (var i = 0; i < params.skill_id.length; i++) {
                             resumeskillData.push(
-                                [resume_id, params.skill_id[i]]
+                                [Number(resume_id), params.skill_id[i]]
                             );
                         }
                     }
                     else {
-                        resumeskillData.push([resume_id, Number(params.skill_id)]);
+                        resumeskillData.push([Number(resume_id), Number(params.skill_id)]);
                     }
                     connection.query(query2, resumeskillData, function (err, result) {
                         if (err || params.company_id === undefined) {
@@ -151,12 +151,12 @@ exports.triinsert = function(params, callback) {
                             if (params.company_id.constructor === Array) {
                                 for (var i = 0; i < params.company_id.length; i++) {
                                     resumecompanyData.push(
-                                        [resume_id, params.company_id[i]]
+                                        [Number(resume_id), params.company_id[i]]
                                     );
                                 }
                             }
                             else {
-                                resumecompanyData.push([resume_id, Number(params.company_id)]);
+                                resumecompanyData.push([Number(resume_id), Number(params.company_id)]);
                             }
                             connection.query(query3, resumecompanyData, function (err, result) {
                                 callback(err, result);
