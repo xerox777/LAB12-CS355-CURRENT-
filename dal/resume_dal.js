@@ -240,21 +240,21 @@ exports.editinfo = function(res_id, callback) {
 exports.update = function(params, callback) {
     var query = 'UPDATE resume SET rname = ?, account_id = ? WHERE resume_id = ?';
     var queryData = [params.rname, Number(params.account_id), Number(params.resume_id)];
-    connection.query(query, queryData, function(err, result) {
-        if(err) {
-            console.log(err);
+    connection.query(query, queryData, function(err3, result3) {
+        if(err3) {
+            console.log(err3);
         } else {
            /* var query = 'call resume_edit(?)';
             var queryData = [Number(params.resume_id)];
             connection.query(query, queryData, function (error, Result) {
                 callback(err, result);*/
-            resumeSkillUpdate(params, function(err, result){
-                if(err) {
-                    console.log(err);
+            resumeSkillUpdate(params, function(err1, result1){
+                if(err1) {
+                    console.log(err1);
                 } else {
-                    resumeSchoolUpdate(params, function(err, esult){
-                        if(err){
-                            console.log(err);
+                    resumeSchoolUpdate(params, function(err2, result2){
+                        if(err2){
+                            console.log(err2);
                         } else{
                             resumeCompanyUpdate(params, function(err, result){
                                 if(err){
@@ -263,11 +263,13 @@ exports.update = function(params, callback) {
                                     callback(err, result);
                                 }
                             });
+                        //callback(err2, result2);
                         }
                     });
+                   // callback(err1, result1);
                 }
             });
-
+            //callback(err3, result3);
             }
 
         });
@@ -286,47 +288,80 @@ exports.update = function(params, callback) {
 var resumeSkillUpdate = function(params, callback){
     var query = 'Delete from resume_skill where resume_id = (?)';
     var queryData = [Number(params.resume_id)];
+    if(params.skill_id != null) {
+
+
+        if (params.skill_id.constructor === Array) {
+            var arr = [];
+            for (var i = 0; i < params.skill_id.length; i++) {
+                arr.push(Number(params.skill_id[i]));
+            }
+        } else {
+            var arr = [Number(params.skill_id)];
+        }
+    }
     connection.query(query, queryData, function(err, result){
         if(err) {
             console.log(err);
-        }else {
-
+        }else if(arr!=null) {
             var query = 'CALL resumeskill_insert(?, ?)';
-            var param = [Number(params.skill_id), Number(params.resume_id)];
-            connection.query(query, param, function (err, result) {
-                if (err || param.account_id === undefined) {
-                    callback(err, result);
-                }
-                else {
-                    resume_dal.triinsert(param, callback);
-                }
-            });
+            for (var i = 0; i < arr.length; i++) {
+                var param = [arr[i], Number(params.resume_id)];
+                connection.query(query, param, function (err, result) {
+                    if (err || param.account_id === undefined) {
+                        callback(err, result);
+                        //console.log(err);
+                    }
+                    else {
+                        resume_dal.triinsert(param, callback);
+                    }
+                });
+            }
+        } else{
+            callback(err, result);
         }
         });
 };
 var resumeSchoolUpdate = function(params, callback){
     var query = 'Delete from resume_school where resume_id = (?)';
     var queryData = [Number(params.resume_id)];
+    if(params.school_id != null) {
+
+
+        if (params.school_id.constructor === Array) {
+            var arr = [];
+            for (var i = 0; i < params.school_id.length; i++) {
+                arr.push(Number(params.school_id[i]));
+            }
+        } else {
+            var arr = [Number(params.school_id)];
+        }
+    }
+
     connection.query(query, queryData, function(err, result) {
         if (err) {
             console.log(err);
-        } else {
-
-
-        var query = 'CALL resumeschool_insert(?, ?)';
-        var param = [Number(params.resume_id), Number(params.school_id)];
-        connection.query(query, param, function (err, result) {
-            if (err || param.account_id === undefined) {
+        } else if (arr != null) {
+            var query = 'CALL resumeschool_insert(?, ?)';
+            for (var i =0; i < arr.length; i++) {
+            var param = [Number(params.resume_id), arr[i]];
+            connection.query(query, param, function (err, result) {
+                if (err || param.account_id === undefined) {
+                    callback(err, result);
+                    //console.log(err);
+                }
+                else {
+                    resume_dal.triinsert(param, callback);
+                }
+            });
+        }
+    } else {
                 callback(err, result);
-            }
-            else {
-                resume_dal.triinsert(param, callback);
-            }
-        });
-    }
+        }
     });
 };
 var resumeCompanyUpdate = function(params, callback){
+    //TODO THIS IS THA NEW STANDARD HOMIE!
     var query = 'Delete from resume_company where resume_id = (?)';
     var param = [Number(params.resume_id)];
 
@@ -355,6 +390,7 @@ var resumeCompanyUpdate = function(params, callback){
                 connection.query(query, param, function (err, result) {
                     if (err || param.account_id === undefined) {
                         callback(err, result);
+                        //console.log(err);
                     }
                     else {
                         resume_dal.triinsert(param, callback);
@@ -362,6 +398,8 @@ var resumeCompanyUpdate = function(params, callback){
 
                 });
             }
+        } else {
+            callback(err, result);
         }
     });
 };

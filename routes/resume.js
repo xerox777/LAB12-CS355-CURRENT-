@@ -79,6 +79,7 @@ router.get('/update', function(req, res){
         } else {
             //res.render('resume/resume_update', {resume: req.query, res: req.query});
             res.redirect(302, '/resume/all');
+            //res.render('resume/resume_view_all');
         }
     });
 
