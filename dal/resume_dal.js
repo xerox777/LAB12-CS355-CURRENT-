@@ -329,20 +329,39 @@ var resumeSchoolUpdate = function(params, callback){
 var resumeCompanyUpdate = function(params, callback){
     var query = 'Delete from resume_company where resume_id = (?)';
     var param = [Number(params.resume_id)];
+
+    if(params.company_id != null) {
+
+
+        if (params.company_id.constructor === Array) {
+            var arr = [];
+            for (var i = 0; i < params.company_id.length; i++) {
+                arr.push(Number(params.company_id[i]));
+            }
+        } else {
+            var arr = [Number(params.company_id)];
+        }
+    }
+
     connection.query(query, param, function(err, result) {
         if(err) {
             console.log(err);
-        }else {
+        }else if( arr!= null){
             var query = 'CALL resumecompany_insert(?, ?)';
-            var param = [Number(params.resume_id), Number(params.company_id)];//, Number(params.account_id)];
-            connection.query(query, param, function (err, result) {
-                if (err || param.account_id === undefined) {
-                    callback(err, result);
-                }
-                else {
-                    resume_dal.triinsert(param, callback);
-                }
-            });
+
+            for (var i = 0; i < arr.length; i++) {
+                var param = [Number(params.resume_id), arr[i]];//, Number(params.account_id)];
+
+                connection.query(query, param, function (err, result) {
+                    if (err || param.account_id === undefined) {
+                        callback(err, result);
+                    }
+                    else {
+                        resume_dal.triinsert(param, callback);
+                    }
+
+                });
+            }
         }
     });
 };
