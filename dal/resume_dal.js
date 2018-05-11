@@ -112,6 +112,7 @@ exports.triinsert = function(params, callback) {
             var query = 'INSERT INTO resume_school (resume_id, school_id) VALUES (?)';
             var resumeschoolData = [];
 
+
             if (params.school_id.constructor === Array) {
                 for (var i = 0; i < params.school_id.length; i++) {
                     resumeschoolData.push(
@@ -119,9 +120,11 @@ exports.triinsert = function(params, callback) {
                     );
                 }
             }
+
             else {
                 resumeschoolData.push([Number(resume_id), Number(params.school_id)]);
             }
+
             connection.query(query, resumeschoolData, function (err, result) {
                 if (err || params.skill_id === undefined) {
                     console.log(err);
@@ -137,6 +140,7 @@ exports.triinsert = function(params, callback) {
                             );
                         }
                     }
+
                     else {
                         resumeskillData.push([Number(resume_id), Number(params.skill_id)]);
                     }
@@ -145,23 +149,25 @@ exports.triinsert = function(params, callback) {
                             console.log(err);
                             //callback(err, result);
                         } else {
-                            var query3 = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?)';
+                            var query3 = 'INSERT INTO resume_company (resume_id, company_id) VALUES (?, ?)';
                             var resumecompanyData = [];
-
-                            if (params.company_id.constructor === Array) {
-                                for (var i = 0; i < params.company_id.length; i++) {
-                                    resumecompanyData.push(
-                                        [Number(resume_id), params.company_id[i]]
-                                    );
+                                if (params.company_id.constructor === Array) {
+                                    for (var i = 0; i < params.company_id.length; i++) {
+                                        resumecompanyData.push([Number(resume_id), Number(params.company_id[i])]);
+                                    connection.query(query3, resumecompanyData[i], function (err, result) {
+                                        //allback(err, result);
+                                    });
                                 }
-                            }
-                            else {
-                                resumecompanyData.push([Number(resume_id), Number(params.company_id)]);
-                            }
-                            connection.query(query3, resumecompanyData, function (err, result) {
-                                callback(err, result);
-                            });
+                                } else {
+                                    resumecompanyData.push([Number(resume_id), Number(params.company_id)]);
+                                    connection.query(query3, resumecompanyData, function (err, result) {
+                                        //callback(err, result);
+                                    });
+                                }
+                            callback(err, result);
                         }
+
+
                     });
                 }
             });
